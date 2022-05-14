@@ -3,14 +3,13 @@ let refreshIntervalId = setInterval(function() {
            request.open('GET', `/next_gen`);
            request.onload = () => {
                const response = JSON.parse(request.responseText);
-               console.log(response)
+               document.getElementsByClassName("counter")[0].textContent = response['counter'];
                if (response['repeat'] === true) {
                    alert("Game Over");
                    clearInterval(refreshIntervalId);
                }
                for (let i=0; i<response['old_world'].length; i++) {
                    for (let j=0; j<response['old_world'][i].length; j++) {
-                       document.getElementsByClassName("counter")[0].textContent = response['counter']
                        if (response['world'][i][j]) {
                            document.getElementById(i+" "+j).setAttribute("class", "cell living-cell");
                        } else if (response['old_world'][i][j] && response['world'][i][j]===0) {
