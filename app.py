@@ -37,6 +37,7 @@ def live():
 
 @app.route('/next_gen')
 def next_gen():
+    """Отправляет данные в формате JSON-строки в ответ на запрос по url"""
     game = GameOfLife()
     if game.counter:
         game.form_new_generation()
