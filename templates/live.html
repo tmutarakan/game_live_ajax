@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+    <a class="btn btn-warning home" href="{{ url_for('index') }}">На главную</a>
+    <a class="btn btn-info refresh" href="{{ url_for('live') }}">Обновить</a>
+    <div class="counter">{{ game.counter }}</div>
+    <table class="world">
+        {% for i in range(game.world|length) %}
+            <tr>
+                {% for j in range(game.world[i]|length) %}
+                    {% if game.world[i][j] %}
+                        <td class="cell living-cell" id="{{i}} {{j}}"></td>
+                    {% elif game.old_world[i][j] and not game.world[i][j] %}
+                        <td class="cell dead-cell" id="{{i}} {{j}}"></td>
+                    {% else %}
+                        <td class="cell" id="{{i}} {{j}}"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+   <script type="text/javascript" src="{{ url_for('static', filename='js/next_gen.js')}}"></script>
+{% endblock %}
