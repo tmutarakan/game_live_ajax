@@ -22,8 +22,8 @@ class GameOfLife(metaclass=SingletonMeta):
         self.world = self.generate_universe()
         self.old_world = copy.deepcopy(self.world)
         self.counter = 0
-        self.previous_states = []
-        self.repeat = False
+        self.previous_states = []   # Список всех предыдущих состояний мира, каждое хранится в виде числа
+        self.repeat = False         # Фиксирует наличие повторов
 
     def form_new_generation(self):
         universe = self.world
@@ -51,6 +51,7 @@ class GameOfLife(metaclass=SingletonMeta):
         return [[random.randint(0, 1) for _ in range(self.__width)] for _ in range(self.__height)]
 
     def get_worlds_dict(self) -> dict:
+        """Данные для ответа браузеру"""
         return {
             'old_world': self.old_world,
             'world': self.world,
@@ -59,6 +60,7 @@ class GameOfLife(metaclass=SingletonMeta):
         }
 
     def add_previous_state(self):
+        """Добавляет нынешнее состояние мира в список"""
         world_state = self.__world_state()
         self.repeat = self.__find_repeat(world_state)
         self.previous_states.append(world_state)
@@ -75,14 +77,16 @@ class GameOfLife(metaclass=SingletonMeta):
         return count
 
     def __world_state(self) -> bin:
+        """Преобразует двумерный список состоящий из нулей и единиц в число"""
         state = 0
         for i in range(len(self.world)):
             for j in range(len(self.world[0])):
                 state <<= 1
                 state += self.world[i][j]
-        return bin(state)
+        return state
 
     def __find_repeat(self, world_state) -> bool:
+        """Поиск повторных состояний мира"""
         if world_state in self.previous_states:
             return True
         return False
