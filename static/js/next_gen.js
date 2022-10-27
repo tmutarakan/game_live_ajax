@@ -7,6 +7,8 @@ let refreshIntervalId = setInterval(function() {
                if (response['repeat'] === true) {
                    alert("Game Over");
                    clearInterval(refreshIntervalId);
+                   request.open('GET', `/destroy_the_world`);
+                   request.send();
                }
                for (let i=0; i<response['old_world'].length; i++) {
                    for (let j=0; j<response['old_world'][i].length; j++) {

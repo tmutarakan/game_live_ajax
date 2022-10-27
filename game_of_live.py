@@ -65,6 +65,11 @@ class GameOfLife(metaclass=SingletonMeta):
         self.repeat = self.__find_repeat(world_state)
         self.previous_states.append(world_state)
 
+    @classmethod
+    def destroy_the_world(cls):
+        """Очищает данные класса - одиночки"""
+        cls._instances = {}
+
     @staticmethod
     def __get_near(universe, pos, system=None):
         if system is None:

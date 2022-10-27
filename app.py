@@ -51,6 +51,12 @@ def get_len():
     return json.dumps({'len', len(name)})
 
 
+@app.route('/destroy_the_world')
+def destroy_world():
+    GameOfLife().destroy_the_world()
+    return ''
+
+
 def create_app():
     return app
 
